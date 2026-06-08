@@ -1,0 +1,41 @@
+name: Auto Update IPTV
+
+# 設定觸發條件
+on:
+  schedule:
+    # 使用 Cron 語法：每天 UTC 時間 0點和 12點 (台灣時間早上8點和晚上8點) 自動執行
+    - cron: '0 0,12 * * *' 
+  workflow_dispatch: # 加上這行，代表允許我們在 GitHub 網頁上手動點擊「執行」按鈕 (方便測試)
+
+permissions:
+  contents: write # 賦予機器人寫入程式碼倉庫的權限，這樣才能把 M3U 存檔
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # 使用最新的 Ubuntu 雲端虛擬機
+
+    steps:
+    - name: 1. 取得專案程式碼
+      uses: actions/checkout@v3
+
+    - name: 2. 設定 Python 環境
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: 3. 安裝必要的套件 (requests)
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: 4. 執行我們的 Python 更新腳本
+      run: python update.py
+
+    - name: 5. 將更新後的 M3U 檔案自動 commit 並推送到 GitHub
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action Bot"
+        git add live.m3u
+        # 如果檔案有變更才 commit，沒變更就不做動作 (避免報錯)
+        git commit -m "Auto update live.m3u" || exit 0
+        git push
