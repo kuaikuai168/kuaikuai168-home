@@ -1,39 +1,64 @@
 import requests
 
-# 1. 直接定位到 GitHub 最強大的開源直播源專案（這裡以台灣頻道清單為例，裡面有上百個頻道）
-SOURCE_M3U_URL = "https://iptv-org.github.io/iptv/countries/tw.m3u"
+# 1. 擴大水源：同時抓取 台灣、全球體育、全球娛樂頻道
+SOURCES = {
+    "台灣綜合": "https://iptv-org.github.io/iptv/countries/tw.m3u",
+    "全球體育": "https://iptv-org.github.io/iptv/categories/sports.m3u",
+    "全球娛樂": "https://iptv-org.github.io/iptv/categories/entertainment.m3u"
+}
 
-def fetch_channels_from_github(source_url):
-    """從遠端公開專案抓取並解析所有頻道"""
-    print("📥 正在從遠端庫抓取最新頻道清單...")
-    try:
-        response = requests.get(source_url, timeout=10)
-        if response.status_code != 200:
-            return []
-        
-        lines = response.text.splitlines()
-        channels = []
-        current_name = "未命名頻道"
-        
-        # 簡單的 M3U 檔案解析邏輯
-        for line in lines:
-            line = line.strip()
-            if line.startswith("#EXTINF"):
-                # 抓取逗號後面的頻道中文/英文名稱
-                if "," in line:
-                    current_name = line.split(",")[-1].strip()
-            elif line.startswith("http"):
-                channels.append({"name": current_name, "url": line})
-        return channels
-    except Exception as e:
-        print(f"❌ 抓取失敗: {e}")
-        return []
+# 2. 智慧過濾設定
+# ❌ 黑名單：包含這些字眼的頻道直接丟掉
+BLACKLIST = ["大愛", "daai", "goodtv", "唯心", "佛", "宗教", "church", "gospel", "bible", "god", "islam", "buddha", "法界", "生命電視"]
+
+#  想找的關鍵字（不分大小寫）：體育、綜藝、電影、熱門電視台
+WANTED = ["sport", "體育", "運動", "綜藝", "娛樂", "movie", "電影", "show", "tvbs", "ebc", "東森", "華視", "中視", "台視"]
+
+def fetch_and_filter():
+    all_filtered_channels = []
+    
+    for category, url in SOURCES.items():
+        print(f"📥 正在從【{category}】抓取清單...")
+        try:
+            response = requests.get(url, timeout=10)
+            if response.status_code != 200:
+                continue
+            
+            lines = response.text.splitlines()
+            current_name = ""
+            
+            for line in lines:
+                line = line.strip()
+                if line.startswith("#EXTINF"):
+                    if "," in line:
+                        current_name = line.split(",")[-1].strip()
+                elif line.startswith("http") and current_name:
+                    name_lower = current_name.lower()
+                    
+                    # 檢查黑名單
+                    is_blacklisted = any(bad_word in name_lower for bad_word in BLACKLIST)
+                    if is_blacklisted:
+                        continue
+                    
+                    # 如果是台灣頻道，預設保留 (除非在黑名單內)
+                    # 如果是全球體育/娛樂，則需要符合我們想要的關鍵字 (或者是亞洲/中文頻道)
+                    if category == "台灣綜合":
+                        all_filtered_channels.append({"name": f"[台灣] {current_name}", "url": line})
+                    else:
+                        # 檢查是否符合想要的關鍵字
+                        is_wanted = any(good_word in name_lower for good_word in WANTED)
+                        if is_wanted:
+                            all_filtered_channels.append({"name": f"[{category}] {current_name}", "url": line})
+                            
+        except Exception as e:
+            print(f"❌ 抓取 {category} 失敗: {e}")
+            
+    return all_filtered_channels
 
 def test_url(url):
-    """快速測試網址是否有效 (使用 HEAD 請求比 GET 快 10 倍)"""
+    """快速測試網址是否有效"""
     try:
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        # 使用 requests.head 只抓取網頁標頭，不下載影片內容，速度極快
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
         response = requests.head(url, timeout=3, headers=headers)
         if response.status_code in [200, 206, 301, 302]:
             return True
@@ -42,17 +67,15 @@ def test_url(url):
     return False
 
 def main():
-    # 抓取候選清單
-    all_channels = fetch_channels_from_github(SOURCE_M3U_URL)
-    print(f"總共找到 {len(all_channels)} 個候選頻道，開始篩選...")
+    candidate_channels = fetch_and_filter()
+    print(f"🔍 經過關鍵字過濾後，剩餘 {len(candidate_channels)} 個候選頻道，開始進行連線測試...")
     
     valid_channels = []
-    TARGET_COUNT = 25  # ⚙️ 設定你想要的目標頻道數量（例如：25 個）
+    TARGET_COUNT = 40  # ⚙️ 這次把目標提高到 40 個優質頻道！
     
-    for ch in all_channels:
-        # 如果已經收集到足夠的頻道，就提早結束測試，避免 GitHub 跑太久
+    for ch in candidate_channels:
         if len(valid_channels) >= TARGET_COUNT:
-            print(f"🎯 已達到目標數量 {TARGET_COUNT} 個頻道，停止測試。")
+            print(f"🎯 已集滿 {TARGET_COUNT} 個可用頻道，停止測試。")
             break
             
         print(f"正在測試: {ch['name']} -> ", end="")
@@ -62,14 +85,14 @@ def main():
         else:
             print("❌ 失效")
             
-    # 寫入全新的 live.m3u 檔案
+    # 寫入 M3U
     with open("live.m3u", "w", encoding="utf-8") as f:
         f.write("#EXTM3U\n")
         for ch in valid_channels:
             f.write(f"#EXTINF:-1, {ch['name']}\n")
             f.write(f"{ch['url']}\n")
             
-    print(f"🎉 任務完成！共成功篩選出 {len(valid_channels)} 個優質頻道，已寫入 live.m3u！")
+    print(f"🎉 大功告成！已過濾掉宗教台，並精選出 {len(valid_channels)} 個體育/娛樂/綜合頻道！")
 
 if __name__ == "__main__":
     main()
