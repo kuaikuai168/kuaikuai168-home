@@ -31,11 +31,10 @@ jobs:
     - name: 4. 執行我們的 Python 更新腳本
       run: python update.py
 
-    - name: 5. 將更新後的 M3U 檔案自動 commit 並推送到 GitHub
+    - name: 5. 將所有 M3U 檔案自動 commit 並推送到 GitHub
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action Bot"
-        git add live.m3u
-        # 如果檔案有變更才 commit，沒變更就不做動作 (避免報錯)
-        git commit -m "Auto update live.m3u" || exit 0
+        git add *.m3u  # 這裡改用星號，代表把所有 .m3u 結尾的檔案都加進去
+        git commit -m "Auto update multiple m3u files" || exit 0
         git push
