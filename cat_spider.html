@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>貓咪海外資源站 TVBox 擴展蜘蛛</title>
+    <script>
+        // --- 1. TVBox 核心通訊基礎協議 ---
+        window.addEventListener("message", async function (event) {
+            const request = JSON.parse(event.data);
+            const { action, quick, wd, pg, ids } = request;
+            let response = { action: action, data: null };
+
+            try {
+                if (action === "init") {
+                    response.data = await init();
+                } else if (action === "home") {
+                    response.data = await home();
+                } else if (action === "category") {
+                    response.data = await category(request.tid, pg);
+                } else if (action === "search") {
+                    response.data = await search(wd, quick, pg);
+                } else if (action === "detail") {
+                    response.data = await detail(ids);
+                } else if (action === "play") {
+                    response.data = await play(request.flag, request.playUrl);
+                }
+            } catch (e) {
+                response.error = e.message;
+            }
+
+            // 將解析結果回傳給影視倉/TVBox主程式
+            window.parent.postMessage(JSON.stringify(response), "*");
+        });
+
+        const HOST = "https://catembylegacy.fastcdn.dpdns.org";
+
+        // --- 2. 擴展核心邏輯（爬蟲與解析） ---
+
+        async function init() {
+            return {
+                status: "OK",
+                desc: "貓咪海外資源 HTML 擴展已就緒"
+            };
+        }
+
+        // 獲取首頁與分類（通常包含體育直播、電影、電視劇等）
+        async function home() {
+            // 這裡配置該切片站的標準影視分類 ID
+            const classes = [
+                {"type_id": "1", "type_name": "⚽ 體育賽事"},
+                {"type_id": "2", "type_name": "🎬 電影點播"},
+                {"type_id": "3", "type_name": "📺 電視連續劇"},
+                {"type_id": "4", "type_name": "🧸 動漫綜藝"}
+            ];
+            return { class: classes };
+        }
+
+        // 點進分類後，抓取影片/球賽列表
+        async function category(tid, pg) {
+            const page = pg || 1;
+            // 模擬請求影視站的 API 或網頁結構
+            const url = `${HOST}/api.php/provide/vod/?ac=detail&t=${tid}&pg=${page}`;
+            const res = await fetch(url).then(r => r.json());
+            
+            let list = res.list.map(item => ({
+                vod_id: item.vod_id,
+                vod_name: item.vod_name,
+                vod_pic: item.vod_pic,
+                vod_remarks: item.vod_remarks
+            }));
+
+            return { page: page, pagecount: res.pagecount, limit: res.limit, total: res.total, list: list };
+        }
+
+        // 搜尋功能（在電視盒裡搜球隊名字、電影名）
+        async function search(wd, quick, pg) {
+            const url = `${HOST}/api.php/provide/vod/?ac=detail&wd=${encodeURIComponent(wd)}&pg=${pg || 1}`;
+            const res = await fetch(url).then(r => r.json());
+            
+            let list = res.list.map(item => ({
+                vod_id: item.vod_id,
+                vod_name: item.vod_name,
+                vod_pic: item.vod_pic,
+                vod_remarks: item.vod_remarks
+            }));
+            return { list: list };
+        }
+
+        // 獲取影片詳情與播放線路
+        async function detail(id) {
+            const url = `${HOST}/api.php/provide/vod/?ac=detail&ids=${id}`;
+            const res = await fetch(url).then(r => r.json());
+            const item = res.list[0];
+
+            return {
+                list: [{
+                    vod_id: item.vod_id,
+                    vod_name: item.vod_name,
+                    vod_play_from: item.vod_play_from || "貓咪極速源",
+                    vod_play_url: item.vod_play_url // 格式通常為：正片$http://...m3u8
+                }]
+            };
+        }
+
+        // 核心防盜鏈破解：動態解析最終的 .m3u8 串流網址
+        async function play(flag, playUrl) {
+            // 如果該網址帶有特殊加密，在此處編寫解密演算法
+            // 目前直接做防跳轉處理，讓 TVBox 的 ExoPlayer/IjkPlayer 直接調用
+            return {
+                parse: 0, // 0 代表直接播放，1 代表需要雙重解析
+                url: playUrl,
+                header: {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                    "Referer": HOST
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+    <h3>貓咪海外資源站本地解析中...請勿關閉</h3>
+</body>
+</html>
