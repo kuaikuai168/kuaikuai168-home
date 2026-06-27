@@ -27,15 +27,15 @@ https://liveeu-gcp.alkassdigital.net/alkass6-p/main.m3u8
 https://liveeu-gcp.alkassdigital.net/alkass3-p/main.m3u8
 #EXTINF:-1, Alkass Two (1080p)
 https://liveeu-gcp.alkassdigital.net/alkass2-p/main.m3u8
+#EXTINF:-1, Arena Fight (1080p)
+https://nl1.nghk.ai/ArenaFight/index.m3u8
 #EXTINF:-1, Arena Sport 1 (1080p)
 https://nl1.nghk.ai/ArenaSport1BH/index.m3u8
+#EXTINF:-1, Arena Sport 1 (720p)
+https://nl1.nghk.ai/AS1HRHD/index.m3u8
+#EXTINF:-1, Arena Sport 1 (1080p)
+https://nl1.nghk.ai/ArenaSport1HD/index.m3u8
 #EXTINF:-1, Arena Sport 1
 http://88.212.15.19/live/test_arenasport/playlist.m3u8
 #EXTINF:-1, Arena Sport 1 Premium (720p)
 https://nl1.nghk.ai/ArenaPremium1HD/index.m3u8
-#EXTINF:-1, Arena Sport 2
-http://88.212.15.19/live/test_arenasport_dva/playlist.m3u8
-#EXTINF:-1, Arena Sport 2 Premium (1080p)
-https://nl1.nghk.ai/ArenaPremium2HD/index.m3u8
-#EXTINF:-1, Arena Sport 3 (720p)
-https://nl1.nghk.ai/ArenaSport3HD/index.m3u8
