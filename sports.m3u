@@ -37,5 +37,5 @@ http://206.212.244.63/6153/index.m3u8
 http://88.212.15.19/live/test_arenasport/playlist.m3u8
 #EXTINF:-1, Arena Sport 2
 http://88.212.15.19/live/test_arenasport_dva/playlist.m3u8
-#EXTINF:-1, Arryadia (720p)
-https://stream-lb.livemediama.com/arryadia/hls/master.m3u8
+#EXTINF:-1, ATG Live (720p)
+https://kanal75xto-llhls.akamaized.net/live/Data/atg-kanal-15-02a-rr/HLS-Legacy-HL/atg-kanal-15-02a-rr.m3u8
