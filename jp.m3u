@@ -3,8 +3,6 @@
 https://d2p4mrcwl6ly4.cloudfront.net/out/v1/8d50f69fdbbf411a8d302743e4263716/CGNWebLiveJP.m3u8
 #EXTINF:-1, GSTV (720p)
 https://japaneast.av.mk.io/mediakindcdn-mediakind/ca01a143-f823-4432-b670-c22ff9643ce4/index.qfm/manifest(format=m3u8-cmaf)
-#EXTINF:-1, JOAX-DTV
-https://ntv5.mov3.co/hls/ntv.m3u8
 #EXTINF:-1, JOCX-DTV
 https://fujitv4.mov3.co/hls/fujitv.m3u8
 #EXTINF:-1, JOEX-DTV (540p)
@@ -19,7 +17,5 @@ https://cdn4.skygo.mn/live/disk1/MNB_World/DASH-FTA/MNB_World.mpd
 https://nhk4.mov3.co/hls/nhk.m3u8
 #EXTINF:-1, QVC (1080p)
 https://d1flvb4iqlercm.cloudfront.net/live/live_1080p_2nd.m3u8
-#EXTINF:-1, Shop Channel (1080p) [Not 24/7]
-https://stream3.shopch.jp/HLS/master.m3u8
 #EXTINF:-1, Weathernews (720p)
 https://rch01e-alive-hls.akamaized.net/38fb45b25cdb05a1/out/v1/4e907bfabc684a1dae10df8431a84d21/index.m3u8
