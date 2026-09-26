@@ -1,16 +1,4 @@
 #EXTM3U
-#EXTINF:-1, 5Gold (1080p)
-http://str2.iptvhd.ru:8080/sport5gold/index.m3u8
-#EXTINF:-1, 5Live (1080p)
-http://str2.iptvhd.ru:8080/5live/index.m3u8
-#EXTINF:-1, 5Plus (1080p)
-http://89.33.29.115:8080/sportplus/index.m3u8
-#EXTINF:-1, 5Sport 4K (2160p)
-http://str2.iptvhd.ru:8080/5SPORT_4K/index.m3u8
-#EXTINF:-1, 5Sport (1080p)
-http://str2.iptvhd.ru:8080/5sport/index.m3u8
-#EXTINF:-1, 5Stars (1080p)
-http://89.33.29.115:8080/IL_5Stars/index.m3u8
 #EXTINF:-1, 30A Golf Kingdom (720p)
 https://30a-tv.com/feeds/vidaa/golf.m3u8
 #EXTINF:-1, A Spor SD (1080p)
@@ -39,3 +27,15 @@ https://streaming.astrakhan.ru/astrakhanrusporthd/playlist.m3u8
 https://kanal75xto-llhls.akamaized.net/live/Data/atg-kanal-15-02a-rr/HLS-Legacy-HL/atg-kanal-15-02a-rr.m3u8
 #EXTINF:-1, Azteca Deportes Network (1080p)
 http://181.119.66.28:8081/AZTECA-DEPORTES-HD/index.m3u8
+#EXTINF:-1, Bahrain Sports 1 (720p) [Not 24/7]
+https://5c7b683162943.streamlock.net/live/ngrp:sportsone_all/playlist.m3u8
+#EXTINF:-1, Bahrain Sports 2 (720p) [Not 24/7]
+https://5c7b683162943.streamlock.net/live/ngrp:bahrainsportstwo_all/playlist.m3u8
+#EXTINF:-1, beIN SPORTS XTRA (1080p)
+https://bein-xtra-bein.amagi.tv/playlist.m3u8
+#EXTINF:-1, BEK Sports West (720p)
+https://cdn3.wowza.com/5/ZWQ1K2NYTmpFbGsr/BEK-WOWZA-1/smil:BEKPRIMEW.smil/playlist.m3u8
+#EXTINF:-1, Belarus-5 (1080p) [Not 24/7]
+https://ngtrk.dc.beltelecom.by/ngtrk/smil:belarus5.smil/playlist.m3u8
+#EXTINF:-1, Belarus-5 HD (1080p)
+http://178.124.179.122:8080/BT5/index.m3u8
