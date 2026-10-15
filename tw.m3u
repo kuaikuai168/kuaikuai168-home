@@ -7,6 +7,8 @@ https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/playlist.m3u8
 https://d3e05csss9c272.cloudfront.net/out/v1/f0bf71c57581470fb9379f603e8f5d83/CGNWebLiveCN.m3u8
 #EXTINF:-1, Dali TV (720p)
 http://www.dalitv.com.tw:4568/live/dali/index.m3u8
+#EXTINF:-1, Discovery Asia Taiwan (1080p)
+http://125.227.210.55:1004/VideoInput/play.ts
 #EXTINF:-1, Good 2 (720p)
 https://live.streamingfast.net/osmflivech2.m3u8
 #EXTINF:-1, Good TV (Taiwan) (720p) [Not 24/7]
