@@ -31,6 +31,8 @@ http://111.59.139.85:11888/tsfile/live/1220_1.m3u8?key=txiptv
 https://lbs-us1.suprememastertv.com/720p.m3u8
 #EXTINF:-1, Taiwan Indigenous TV (720p)
 https://streamipcfapp.akamaized.net/live/_definst_/live_720/key_b1500.m3u8
+#EXTINF:-1, TTV News
+https://live.wcetv.com/hls/master-ttvnews.m3u8
 #EXTINF:-1, TVBS-Asia (1080p)
 http://38.64.72.148/hls/modn/list/4005/playlist.m3u8
 #EXTINF:-1, WXTV (480p)
