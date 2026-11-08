@@ -9,8 +9,12 @@ https://raycom-accdn-firetv.amagi.tv/playlist.m3u8
 https://webstream.multistream.it/memfs/e2cb3629-c1a2-495b-b43a-9eb386f04ed8.m3u8
 #EXTINF:-1, ADO TV (720p)
 https://strhls.streamakaci.tv/ortb/ortb2-multi/playlist.m3u8
+#EXTINF:-1, Al Iraqia Sport (720p)
+https://imn-live.esite-lab.com/hls/iraqia-sports-1.m3u8
 #EXTINF:-1, AntenaPlay Events (576i) [Not 24/7]
 https://live77cdn2.antenaplay.ro/live2_sport07/live2_sport07_3500k.m3u8
+#EXTINF:-1, AntenaSport
+https://stream1.antenaplay.ro/as/AS.ro/chunklist.m3u8
 #EXTINF:-1, Arena4
 http://88.212.7.14/live/arena4/index.m3u8
 #EXTINF:-1, Arena Sport 1
@@ -35,7 +39,3 @@ http://86.192.195.47:9034/stream/1/index.m3u8
 http://86.192.195.47:9034/stream/2/index.m3u8
 #EXTINF:-1, beIN Sports 3
 http://86.192.195.47:9034/stream/4/index.m3u8
-#EXTINF:-1, beIN Sports 4
-http://86.192.195.47:9034/stream/5/index.m3u8
-#EXTINF:-1, beIN Sports 5
-http://86.192.195.47:9034/stream/6/index.m3u8
