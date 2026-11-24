@@ -13,6 +13,10 @@ http://125.227.210.55:1001/VideoInput/play.ts
 http://www.dalitv.com.tw:4568/live/dali/index.m3u8
 #EXTINF:-1, Discovery Asia Taiwan (1080p)
 http://125.227.210.55:1004/VideoInput/play.ts
+#EXTINF:-1, Good 2 (720p)
+https://live.streamingfast.net/osmflivech2.m3u8
+#EXTINF:-1, Good TV (Taiwan) (720p) [Not 24/7]
+https://live.streamingfast.net/osmflivech1.m3u8
 #EXTINF:-1, Hakka TV
 https://h5cul1yar48um3t.wcetv.com/hls/hakkatv.m3u8
 #EXTINF:-1, HBO Asia Taiwan (1080p)
